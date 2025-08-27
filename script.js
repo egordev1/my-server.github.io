@@ -1,11 +1,12 @@
+// script.js
 class RealtimeMessenger {
     constructor() {
         this.currentUser = null;
-        this.messagesRef = firebase.database().ref('messages');
+        this.db = firebase.firestore();
+        this.messagesRef = this.db.collection('messages');
         this.init();
     }
 
-    // Инициализация
     init() {
         // Проверка аутентификации
         firebase.auth().onAuthStateChanged((user) => {
@@ -19,92 +20,60 @@ class RealtimeMessenger {
         });
 
         // Обработчики событий
-        this.setupEventListeners();
-    }
-
-    // Настройка обработчиков событий
-    setupEventListeners() {
-        // Вход в чат
         document.getElementById('loginBtn').addEventListener('click', () => {
             this.login();
         });
 
-        // Выход из чата
         document.getElementById('logoutBtn').addEventListener('click', () => {
             this.logout();
         });
 
-        // Отправка сообщения
         document.getElementById('messageForm').addEventListener('submit', (e) => {
             e.preventDefault();
             this.sendMessage();
         });
-
-        // Поддержка Enter для отправки
-        document.getElementById('messageInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                document.getElementById('messageForm').dispatchEvent(new Event('submit'));
-            }
-        });
     }
 
-    // Вход в чат
-    async login() {
+    login() {
         const displayName = document.getElementById('displayName').value.trim();
-        
-        if (!displayName) {
-            alert('Пожалуйста, введите ваше имя');
-            return;
-        }
+        if (!displayName) return alert('Введите имя');
 
-        try {
-            // Создание анонимного пользователя
-            const result = await firebase.auth().signInAnonymously();
-            const user = result.user;
-            
-            // Обновление профиля
-            await user.updateProfile({
-                displayName: displayName
+        firebase.auth().signInAnonymously()
+            .then(result => {
+                const user = result.user;
+                user.updateProfile({ displayName })
+                    .then(() => {
+                        this.currentUser = user;
+                        this.showChat();
+                        this.loadMessages();
+                    });
+            })
+            .catch(error => {
+                console.error('Ошибка входа:', error);
+                alert('Ошибка входа');
             });
-
-            this.currentUser = user;
-            this.showChat();
-            this.loadMessages();
-            
-        } catch (error) {
-            console.error('Ошибка входа:', error);
-            alert('Ошибка входа: ' + error.message);
-        }
     }
 
-    // Выход из чата
-    async logout() {
-        try {
-            await firebase.auth().signOut();
-            this.currentUser = null;
-            this.showLogin();
-            
-            // Очистка чата
-            document.getElementById('messagesContainer').innerHTML = `
-                <div class="welcome-message">
-                    <p>Добро пожаловать в групповой чат!</p>
-                    <p>Авторизуйтесь, чтобы начать общение.</p>
-                </div>
-            `;
-        } catch (error) {
-            console.error('Ошибка выхода:', error);
-        }
+    logout() {
+        firebase.auth().signOut()
+            .then(() => {
+                this.currentUser = null;
+                this.showLogin();
+                document.getElementById('messagesContainer').innerHTML = `
+                    <div class="welcome-message">
+                        <p>Добро пожаловать в групповой чат!</p>
+                        <p>Авторизуйтесь, чтобы начать общение.</p>
+                    </div>
+                `;
+            });
     }
 
-    // Показать форму входа
     showLogin() {
         document.getElementById('authSection').style.display = 'flex';
         document.getElementById('userSection').style.display = 'none';
         document.getElementById('messageFormSection').style.display = 'none';
     }
 
-    // Показать чат
     showChat() {
         document.getElementById('authSection').style.display = 'none';
         document.getElementById('userSection').style.display = 'flex';
@@ -112,103 +81,81 @@ class RealtimeMessenger {
         document.getElementById('currentUserName').textContent = this.currentUser.displayName;
     }
 
-    // Загрузка сообщений в реальном времени
     loadMessages() {
-        this.messagesRef orderByChild('timestamp').limitToLast(50).on('child_added', (snapshot) => {
-            const message = snapshot.val();
-            this.displayMessage(message);
-            this.scrollToBottom();
+        this.messagesRef.orderBy('timestamp', 'desc').limit(50).onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change => {
+                if (change.type === 'added') {
+                    const message = change.doc.data();
+                    this.displayMessage(message);
+                    this.scrollToBottom();
+                }
+            });
         });
     }
 
-    // Отправка сообщения
     sendMessage() {
         const input = document.getElementById('messageInput');
         const text = input.value.trim();
-        
         if (!text) return;
 
-        const message = {
-            text: text,
+        const messageData = {
+            text,
             senderId: this.currentUser.uid,
             senderName: this.currentUser.displayName,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
 
-        // Добавление сообщения в базу данных
-        this.messagesRef.push(message)
+        this.messagesRef.add(messageData)
             .then(() => {
                 input.value = '';
             })
-            .catch((error) => {
-                console.error('Ошибка отправки сообщения:', error);
+            .catch(error => {
+                console.error('Ошибка отправки:', error);
                 alert('Ошибка отправки сообщения');
             });
     }
 
-    // Отображение сообщения
     displayMessage(message) {
         const container = document.getElementById('messagesContainer');
         const isOwn = message.senderId === this.currentUser.uid;
-        
-        // Если это первое сообщение, очищаем приветствие
+
         if (container.querySelector('.welcome-message')) {
             container.innerHTML = '';
         }
 
-        const messageElement = document.createElement('div');
-        messageElement.className = `message ${isOwn ? 'own' : 'other'}`;
-        messageElement.innerHTML = `
+        const msgElement = document.createElement('div');
+        msgElement.className = `message ${isOwn ? 'own' : 'other'}`;
+        msgElement.innerHTML = `
             <div class="sender">${this.escapeHtml(message.senderName)}</div>
             <div class="text">${this.escapeHtml(message.text)}</div>
             <div class="time">${this.formatTime(message.timestamp)}</div>
         `;
-
-        container.appendChild(messageElement);
+        container.appendChild(msgElement);
         this.scrollToBottom();
     }
 
-    // Получение отформатированного времени
     formatTime(timestamp) {
         if (!timestamp) return '';
-        
         const date = new Date(timestamp);
         const now = new Date();
-        
-        // Если сегодня
-        if (date.toDateString() === now.toDateString()) {
-            return date.toLocaleTimeString('ru-RU', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-        }
-        
-        // Если вчера или ранее
-        return date.toLocaleString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        return date.toDateString() === now.toDateString()
+            ? date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
+            : date.toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
     }
 
-    // Экранирование HTML для безопасности
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
-    // Прокрутка к последнему сообщению
     scrollToBottom() {
         const container = document.getElementById('messagesContainer');
         container.scrollTop = container.scrollHeight;
     }
 }
 
-// Инициализация мессенджера при загрузке страницы
-let messenger;
+// Запуск при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
-    messenger = new RealtimeMessenger();
+    new RealtimeMessenger();
 });
