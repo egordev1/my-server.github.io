@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Групповой мессенджер</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Групповой мессенджер</h1>
+            <div class="auth-section" id="authSection">
+                <input type="text" id="displayName" placeholder="Ваше имя" maxlength="20">
+                <button id="loginBtn">Войти в чат</button>
+            </div>
+            <div class="user-section" id="userSection" style="display: none;">
+                <span id="currentUserName"></span>
+                <button id="logoutBtn">Выйти</button>
+            </div>
+        </header>
+
+        <div class="chat-container">
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-message">
+                    <p>Добро пожаловать в групповой чат!</p>
+                    <p>Авторизуйтесь, чтобы начать общение.</p>
+                </div>
+            </div>
+
+            <div class="message-form" id="messageFormSection" style="display: none;">
+                <form id="messageForm">
+                    <input type="text" id="messageInput" placeholder="Введите сообщение..." autocomplete="off" required>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
