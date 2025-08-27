@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectFlow - MacOS Style</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Top Menu Bar -->
+        <div class="menu-bar">
+            <div class="menu-app-name">ProjectFlow</div>
+            <div class="menu-items">
+                <span class="menu-item">File</span>
+                <span class="menu-item">Edit</span>
+                <span class="menu-item">View</span>
+                <span class="menu-item">Projects</span>
+                <span class="menu-item">Help</span>
+            </div>
+            <div class="window-controls">
+                <div class="window-control close"></div>
+                <div class="window-control minimize"></div>
+                <div class="window-control maximize"></div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-button active">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2 2h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" opacity="0.8"></path>
+                    <path d="M2 4h12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                    <path d="M6 2v2" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                    <path d="M10 2v2" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                </svg>
+                Projects
+            </div>
+            <div class="toolbar-button">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M3 4h10v2H3V4zm0 4h10v2H3V8zm0 4h7v2H3v-2z" opacity="0.8"></path>
+                </svg>
+                Tasks
+            </div>
+            <div class="toolbar-button">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M3 3h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 1v8h10V4H3z" opacity="0.8"></path>
+                    <path d="M5 7h6M5 10h3" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.2" stroke-linecap="round"></path>
+                </svg>
+                Calendar
+            </div>
+            <div class="toolbar-button">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M3 3h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 1v8h10V4H3z" opacity="0.8"></path>
+                    <circle cx="8" cy="7" r="1.5" fill="currentColor" opacity="0.8"></circle>
+                    <path d="M8 9.5v3M5 11h6" stroke="currentColor" stroke-opacity="0.5" stroke-width="1" stroke-linecap="round"></path>
+                </svg>
+                Analytics
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Projects</h3>
+                    <button class="new-project-btn">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                            <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="project-list">
+                    <div class="project-item active">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 2h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" opacity="0.8"></path>
+                            <path d="M2 4h12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                        </svg>
+                        Website Redesign
+                        <span class="project-badge">12</span>
+                    </div>
+                    <div class="project-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 2h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" opacity="0.8"></path>
+                            <path d="M2 4h12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                        </svg>
+                        Mobile App Development
+                        <span class="project-badge">8</span>
+                    </div>
+                    <div class="project-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 2h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" opacity="0.8"></path>
+                            <path d="M2 4h12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                        </svg>
+                        API Integration
+                        <span class="project-badge">5</span>
+                    </div>
+                    <div class="project-item">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 2h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" opacity="0.8"></path>
+                            <path d="M2 4h12" stroke="currentColor" stroke-opacity="0.5" stroke-width="1"></path>
+                        </svg>
+                        Documentation
+                        <span class="project-badge">3</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Labels</h4>
+                    <div class="label-item">
+                        <span class="label-dot" style="background-color: #FF6B6B;"></span>
+                        <span>Urgent</span>
+                    </div>
+                    <div class="label-item">
+                        <span class="label-dot" style="background-color: #4ECDC4;"></span>
+                        <span>Feature</span>
+                    </div>
+                    <div class="label-item">
+                        <span class="label-dot" style="background-color: #45B7D1;"></span>
+                        <span>Bug</span>
+                    </div>
+                    <div class="label-item">
+                        <span class="label-dot" style="background-color: #96CEB4;"></span>
+                        <span>Enhancement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Details Panel -->
+            <div class="project-details">
+                <div class="project-header">
+                    <h1>Website Redesign</h1>
+                    <div class="project-stats">
+                        <span class="stat-item">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                                <path d="M6 2v10M2 6h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path>
+                            </svg>
+                            12 Tasks
+                        </span>
+                        <span class="stat-item">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                                <path d="M2 4h10a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" opacity="0.8"></path>
+                                <path d="M7 7v4M5 9h4" stroke="currentColor" stroke-width="1" stroke-linecap="round"></path>
+                            </svg>
+                            3 Completed
+                        </span>
+                        <span class="stat-item">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1" fill="none"></circle>
+                                <circle cx="7" cy="7" r="2.5" fill="currentColor"></circle>
+                            </svg>
+                            25% Complete
+                        </span>
+                    </div>
+                </div>
+
+                <div class="task-filters">
+                    <button class="filter-btn active">All Tasks</button>
+                    <button class="filter-btn">Active</button>
+                    <button class="filter-btn">Completed</button>
+                    <button class="filter-btn">Overdue</button>
+                </div>
+
+                <div class="tasks-list">
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <h3>Create wireframes for homepage</h3>
+                            <div class="task-meta">
+                                <span class="label-badge" style="background-color: #45B7D1;">Bug</span>
+                                <span class="task-date">Due: Today</span>
+                            </div>
+                        </div>
+                        <div class="task-avatar" style="background-image: url('https://placehold.co/24x24/6366F1/FFFFFF?text=JD');"></div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox checked">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                <path d="M3 6l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                        <div class="task-content">
+                            <h3>Design color scheme and typography</h3>
+                            <div class="task-meta">
+                                <span class="label-badge" style="background-color: #96CEB4;">Enhancement</span>
+                                <span class="task-date">Completed: May 12</span>
+                            </div>
+                        </div>
+                        <div class="task-avatar" style="background-image: url('https://placehold.co/24x24/EC4899/FFFFFF?text=AL');"></div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <h3>Implement responsive navigation</h3>
+                            <div class="task-meta">
+                                <span class="label-badge" style="background-color: #FF6B6B;">Urgent</span>
+                                <span class="task-date">Due: Tomorrow</span>
+                            </div>
+                        </div>
+                        <div class="task-avatar" style="background-image: url('https://placehold.co/24x24/10B981/FFFFFF?text=SM');"></div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox checked">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                <path d="M3 6l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                        <div class="task-content">
+                            <h3>Create component library</h3>
+                            <div class="task-meta">
+                                <span class="label-badge" style="background-color: #4ECDC4;">Feature</span>
+                                <span class="task-date">Completed: May 10</span>
+                            </div>
+                        </div>
+                        <div class="task-avatar" style="background-image: url('https://placehold.co/24x24/6366F1/FFFFFF?text=JD');"></div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="task-checkbox"></div>
+                        <div class="task-content">
+                            <h3>Optimize images for web</h3>
+                            <div class="task-meta">
+                                <span class="label-badge" style="background-color: #96CEB4;">Enhancement</span>
+                                <span class="task-date">Due: May 18</span>
+                            </div>
+                        </div>
+                        <div class="task-avatar" style="background-image: url('https://placehold.co/24x24/EC4899/FFFFFF?text=AL');"></div>
+                    </div>
+                </div>
+
+                <div class="add-task-section">
+                    <input type="text" placeholder="Add a new task..." class="add-task-input">
+                    <button class="add-task-btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
